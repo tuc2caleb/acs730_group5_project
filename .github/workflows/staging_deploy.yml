@@ -5,13 +5,13 @@ on:
     branches:
     - dev
     paths:
-    - dev/network/**
+    - dev/network/main.tf
 
   pull_request:
     branches:
     - staging
     paths: 
-    - dev/network/**
+    - dev/network/main.tf
 
 permissions:
   contents: read
