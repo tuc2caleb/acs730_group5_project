@@ -5,13 +5,13 @@ on:
     branches:
     - dev
     paths:
-    - dev/network/main.tf
+    - dev/network/**
 
   pull_request:
     branches:
     - staging
     paths: 
-    - dev/network/main.tf
+    - dev/network/**
 
 permissions:
   contents: read
@@ -68,7 +68,7 @@ jobs:
       
       - name: Terraform Show
         id: show
-        run: terraform show -no-color tf.plan 2>&1 > /tmp/plan.txt
+        run: terraform show -no-color tf1.plan 2>&1 > /tmp/plan1.txt
         working-directory: ./dev/network # Use your environment folder
           
       - uses: actions/github-script@v6
@@ -77,7 +77,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require("fs");
-            const plan = fs.readFileSync("/tmp/plan.txt", "utf8");
+            const plan = fs.readFileSync("/tmp/plan1.txt", "utf8");
             const maxGitHubBodyCharacters = 65536;
 
             function chunkSubstr(str, size) {
@@ -113,7 +113,7 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-        run: terraform apply -input=false tf.plan
+        run: terraform apply -input=false tf1.plan
         working-directory: ./dev/network # Use your environment folder
         shell: bash
         
